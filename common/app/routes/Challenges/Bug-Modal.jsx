@@ -6,40 +6,36 @@ import { Button, Modal } from 'react-bootstrap';
 import ns from './ns.json';
 import {
   createIssue,
-  openIssueSearch,
-  closeBugModal,
-
-  bugModalSelector
+  openIssueSearch
 } from './redux';
 
-const mapStateToProps = state => ({ isOpen: bugModalSelector(state) });
-const mapDispatchToProps = { createIssue, openIssueSearch, closeBugModal };
+const mapDispatchToProps = { createIssue, openIssueSearch };
 const bugLink = 'http://forum.freecodecamp.org/t/how-to-report-a-bug/19543';
 
 const propTypes = {
-  closeBugModal: PropTypes.func,
   createIssue: PropTypes.func,
-  isOpen: PropTypes.bool,
-  openIssueSearch: PropTypes.func
+  onClose: PropTypes.func.isRequired,
+  openIssueSearch: PropTypes.func,
+  show: PropTypes.bool.isRequired
 };
 
 export class BugModal extends PureComponent {
   render() {
     const {
-      isOpen,
-      closeBugModal,
+      show,
+      onClose,
       openIssueSearch,
       createIssue
     } = this.props;
     return (
       <Modal
-        show={ isOpen }
+        show={ show }
         >
         <Modal.Header className={ `${ns}-list-header` }>
           Did you find a bug?
           <span
             className='close closing-x'
-            onClick={ closeBugModal }
+            onClick={ onClose }
             >
             ×
           </span>
@@ -79,7 +75,7 @@ export class BugModal extends PureComponent {
             block={ true }
             bsSize='lg'
             bsStyle='primary'
-            onClick={ closeBugModal }
+            onClick={ onClose }
             >
             Cancel
           </Button>
@@ -92,4 +88,4 @@ export class BugModal extends PureComponent {
 BugModal.displayName = 'BugModal';
 BugModal.propTypes = propTypes;
 
-export default connect(mapStateToProps, mapDispatchToProps)(BugModal);
+export default connect(null, mapDispatchToProps)(BugModal);

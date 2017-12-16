@@ -6,38 +6,34 @@ import PureComponent from 'react-pure-render/component';
 
 import ns from './ns.json';
 import {
-  createQuestion,
-  closeHelpModal,
-
-  helpModalSelector
+  createQuestion
 } from './redux';
 
-const mapStateToProps = state => ({ isOpen: helpModalSelector(state) });
-const mapDispatchToProps = { createQuestion, closeHelpModal };
+const mapDispatchToProps = { createQuestion };
 const methodologyUrl = 'https://forum.freecodecamp.org/t/the-read-search-ask-methodology-for-getting-unstuck/137307'; // eslint-disable-line max-len
 
 const propTypes = {
-  closeHelpModal: PropTypes.func,
   createQuestion: PropTypes.func,
-  isOpen: PropTypes.bool
+  onClose: PropTypes.func.isRequired,
+  show: PropTypes.bool.isRequired
 };
 
 export class HelpModal extends PureComponent {
   render() {
     const {
-      isOpen,
-      closeHelpModal,
+      show,
+      onClose,
       createQuestion
     } = this.props;
     return (
       <Modal
-        show={ isOpen }
+        show={ show }
         >
         <Modal.Header className={ `${ns}-list-header` }>
           Ask for help?
           <span
             className='close closing-x'
-            onClick={ closeHelpModal }
+            onClick={ onClose }
             >
             ×
           </span>
@@ -68,7 +64,7 @@ export class HelpModal extends PureComponent {
             block={ true }
             bsSize='lg'
             bsStyle='primary'
-            onClick={ closeHelpModal }
+            onClick={ onClose }
             >
             Cancel
           </Button>
@@ -81,4 +77,4 @@ export class HelpModal extends PureComponent {
 HelpModal.displayName = 'HelpModal';
 HelpModal.propTypes = propTypes;
 
-export default connect(mapStateToProps, mapDispatchToProps)(HelpModal);
+export default connect(null, mapDispatchToProps)(HelpModal);
