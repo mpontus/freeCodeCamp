@@ -6,15 +6,16 @@ import PureComponent from 'react-pure-render/component';
 
 import ns from './ns.json';
 import {
-  createQuestion
+  createQuestion, openHelpChatRoom
 } from './redux';
 
-const mapDispatchToProps = { createQuestion };
+const mapDispatchToProps = { createQuestion, openHelpChatRoom };
 const methodologyUrl = 'https://forum.freecodecamp.org/t/the-read-search-ask-methodology-for-getting-unstuck/137307'; // eslint-disable-line max-len
 
 const propTypes = {
   createQuestion: PropTypes.func,
   onClose: PropTypes.func.isRequired,
+  openHelpChatRoom: PropTypes.func,
   show: PropTypes.bool.isRequired
 };
 
@@ -23,6 +24,7 @@ export class HelpModal extends PureComponent {
     const {
       show,
       onClose,
+      openHelpChatRoom,
       createQuestion
     } = this.props;
     return (
@@ -59,6 +61,14 @@ export class HelpModal extends PureComponent {
             onClick={ createQuestion }
             >
             Create a help post on the forum
+          </Button>
+          <Button
+            block={ true }
+            bsSize='lg'
+            bsStyle='primary'
+            onClick={ openHelpChatRoom }
+            >
+            Ask for help in the Gitter Chatroom
           </Button>
           <Button
             block={ true }

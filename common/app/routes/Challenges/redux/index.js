@@ -84,6 +84,7 @@ export const types = createTypes([
   'openIssueSearch',
   'createIssue',
   'createQuestion',
+  'openHelpChatRoom',
 
   // panes
   'toggleClassicEditor',
@@ -160,6 +161,7 @@ export const closeModal = createAction(types.closeModal);
 export const openIssueSearch = createAction(types.openIssueSearch);
 export const createIssue = createAction(types.createIssue);
 export const createQuestion = createAction(types.createQuestion);
+export const openHelpChatRoom = createAction(types.openHelpChatRoom);
 
 // code storage
 export const storedCodeFound = createAction(
@@ -336,7 +338,8 @@ export default combineReducers(
       }),
       [types.closeModal]: state => ({ ...state, isModalOpen: false }),
       [types.createIssue]: state => ({ ...state, isModalOpen: false }),
-      [types.createQuestion]: state => ({ ...state, isModalOpen: false })
+      [types.createQuestion]: state => ({ ...state, isModalOpen: false }),
+      [types.openHelpChatRoom]: state => ({ ...state, isModalOpen: false })
     }),
     initialState,
     ns

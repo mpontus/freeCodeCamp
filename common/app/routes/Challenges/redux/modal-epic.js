@@ -1,6 +1,6 @@
 import { Observable } from 'rx';
 import { ofType } from 'redux-epic';
-import { types } from '../redux';
+import { types, chatRoomSelector } from '../redux';
 
 import { filesSelector } from '../../../files';
 import { currentChallengeSelector } from '../../../redux';
@@ -27,11 +27,17 @@ function filesToMarkdown(files = {}) {
 }
 
 export default function bugEpic(actions, { getState }, { window }) {
-  return actions::ofType(types.openIssueSearch, types.createIssue, types.createQuestion)
+  return actions::ofType(
+    types.openIssueSearch,
+    types.createIssue,
+    types.createQuestion,
+    types.openHelpChatRoom
+  )
     .map(({ type }) => {
       const state = getState();
       const files = filesSelector(state);
       const challengeName = currentChallengeSelector(state);
+      const helpChatRoom = chatRoomSelector(state);
       const {
         navigator: { userAgent },
         location: { href }
@@ -83,6 +89,14 @@ export default function bugEpic(actions, { getState }, { window }) {
 
           break;
         }
+
+        case types.openHelpChatRoom:
+          window.open(
+            'https://gitter.im/freecodecamp/' +
+            window.encodeURIComponent(helpChatRoom)
+          );
+
+          break;
 
         case types.createQuestion: {
           const titleText = challengeName;

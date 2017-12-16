@@ -23,8 +23,7 @@ import {
   testsSelector,
   outputSelector,
   hintIndexSelector,
-  codeLockedSelector,
-  chatRoomSelector
+  codeLockedSelector
 } from './redux';
 
 import { descriptionRegex } from './utils';
@@ -46,7 +45,6 @@ const mapStateToProps = createSelector(
   outputSelector,
   hintIndexSelector,
   codeLockedSelector,
-  chatRoomSelector,
   (
     { description },
     { title },
@@ -54,20 +52,17 @@ const mapStateToProps = createSelector(
     output,
     hintIndex,
     isCodeLocked,
-    helpChatRoom
   ) => ({
     title,
     description,
     tests,
     output,
-    isCodeLocked,
-    helpChatRoom
+    isCodeLocked
   })
 );
 const propTypes = {
   description: PropTypes.arrayOf(PropTypes.string),
   executeChallenge: PropTypes.func,
-  helpChatRoom: PropTypes.string,
   hint: PropTypes.string,
   isCodeLocked: PropTypes.bool,
   makeToast: PropTypes.func,
@@ -128,7 +123,6 @@ export class SidePanel extends PureComponent {
       executeChallenge,
       updateHint,
       makeToast,
-      helpChatRoom,
       openBugModal,
       openHelpModal,
       isCodeLocked,
@@ -151,7 +145,6 @@ export class SidePanel extends PureComponent {
         </div>
         <ToolPanel
           executeChallenge={ executeChallenge }
-          helpChatRoom={ helpChatRoom }
           hint={ hint }
           isCodeLocked={ isCodeLocked }
           makeToast={ makeToast }

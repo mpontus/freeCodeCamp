@@ -12,7 +12,6 @@ const unlockWarning = (
 
 const propTypes = {
   executeChallenge: PropTypes.func.isRequired,
-  helpChatRoom: PropTypes.string,
   hint: PropTypes.string,
   isCodeLocked: PropTypes.bool,
   makeToast: PropTypes.func.isRequired,
@@ -94,7 +93,6 @@ export default class ToolPanel extends PureComponent {
   render() {
     const {
       executeChallenge,
-      helpChatRoom,
       hint,
       isCodeLocked,
       openBugModal,
@@ -127,9 +125,8 @@ export default class ToolPanel extends PureComponent {
           <Button
             bsSize='large'
             bsStyle='primary'
-            componentClass='a'
-            href={ `https://gitter.im/freecodecamp/${helpChatRoom}` }
-            target='_blank'
+            componentClass='label'
+            onClick={ openHelpModal }
             >
             Help
           </Button>
@@ -142,15 +139,6 @@ export default class ToolPanel extends PureComponent {
             Bug
           </Button>
         </ButtonGroup>
-        <div className='button-spacer' />
-        <Button
-          block={ true }
-          bsStyle='primary'
-          className='btn-big'
-          onClick={ openHelpModal }
-          >
-          Ask for help on the forum
-        </Button>
         <div className='button-spacer' />
       </div>
     );
