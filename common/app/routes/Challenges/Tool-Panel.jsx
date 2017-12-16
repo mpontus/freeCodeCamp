@@ -17,6 +17,7 @@ const propTypes = {
   isCodeLocked: PropTypes.bool,
   makeToast: PropTypes.func.isRequired,
   openBugModal: PropTypes.func.isRequired,
+  openHelpModal: PropTypes.func.isRequired,
   unlockUntrustedCode: PropTypes.func.isRequired,
   updateHint: PropTypes.func.isRequired
 };
@@ -97,6 +98,7 @@ export default class ToolPanel extends PureComponent {
       hint,
       isCodeLocked,
       openBugModal,
+      openHelpModal,
       unlockUntrustedCode
     } = this.props;
     return (
@@ -140,6 +142,15 @@ export default class ToolPanel extends PureComponent {
             Bug
           </Button>
         </ButtonGroup>
+        <div className='button-spacer' />
+        <Button
+          block={ true }
+          bsStyle='primary'
+          className='btn-big'
+          onClick={ openHelpModal }
+          >
+          Ask for help on the forum
+        </Button>
         <div className='button-spacer' />
       </div>
     );
