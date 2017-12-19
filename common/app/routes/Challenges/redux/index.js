@@ -10,8 +10,7 @@ import {
 import { createSelector } from 'reselect';
 import noop from 'lodash/noop';
 
-import bugEpic from './bug-epic';
-import helpEpic from './help-epic';
+import modalEpic from './modal-epic';
 import completionEpic from './completion-epic.js';
 import challengeEpic from './challenge-epic.js';
 import executeChallengeEpic from './execute-challenge-epic.js';
@@ -45,8 +44,7 @@ const challengeToFilesMetaCreator =
   _.flow(challengeToFiles, createFilesMetaCreator);
 
 export const epics = [
-  bugEpic,
-  helpEpic,
+  modalEpic,
   challengeEpic,
   codeStorageEpic,
   completionEpic,
@@ -335,8 +333,11 @@ export default combineReducers(
         output: (state.output || '') + output
       }),
       [types.openBugModal]: state => ({ ...state, isBugOpen: true }),
-      [types.openHelpModal]: state => ({ ...state, isHelpOpen: true }),
+      [types.createIssue]: state => ({ ...state, isBugOpen: false }),
       [types.closeBugModal]: state => ({ ...state, isBugOpen: false }),
+      [types.openHelpModal]: state => ({ ...state, isHelpOpen: true }),
+      [types.createQuestion]: state => ({ ...state, isHelpOpen: false }),
+      [types.openHelpChatRoom]: state => ({ ...state, isHelpOpen: false }),
       [types.closeHelpModal]: state => ({ ...state, isHelpOpen: false })
     }),
     initialState,
