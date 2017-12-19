@@ -10,7 +10,8 @@ import {
 import { createSelector } from 'reselect';
 import noop from 'lodash/noop';
 
-import modalEpic from './modal-epic';
+import bugEpic from './bug-epic';
+import helpEpic from './help-epic';
 import completionEpic from './completion-epic.js';
 import challengeEpic from './challenge-epic.js';
 import executeChallengeEpic from './execute-challenge-epic.js';
@@ -44,7 +45,8 @@ const challengeToFilesMetaCreator =
   _.flow(challengeToFiles, createFilesMetaCreator);
 
 export const epics = [
-  modalEpic,
+  bugEpic,
+  helpEpic,
   challengeEpic,
   codeStorageEpic,
   completionEpic,
@@ -77,12 +79,15 @@ export const types = createTypes([
   createAsyncTypes('submitChallenge'),
   'moveToNextChallenge',
 
-  // modals
+  // bug
   'openBugModal',
-  'openHelpModal',
-  'closeModal',
+  'closeBugModal',
   'openIssueSearch',
   'createIssue',
+
+  // help
+  'openHelpModal',
+  'closeHelpModal',
   'createQuestion',
   'openHelpChatRoom',
 
@@ -154,12 +159,15 @@ export const submitChallengeComplete = createAction(
 
 export const moveToNextChallenge = createAction(types.moveToNextChallenge);
 
-// modals
+// bug
 export const openBugModal = createAction(types.openBugModal);
-export const openHelpModal = createAction(types.openHelpModal);
-export const closeModal = createAction(types.closeModal);
+export const closeBugModal = createAction(types.closeBugModal);
 export const openIssueSearch = createAction(types.openIssueSearch);
 export const createIssue = createAction(types.createIssue);
+
+// help
+export const openHelpModal = createAction(types.openHelpModal);
+export const closeHelpModal = createAction(types.closeHelpModal);
 export const createQuestion = createAction(types.createQuestion);
 export const openHelpChatRoom = createAction(types.openHelpChatRoom);
 
@@ -179,8 +187,8 @@ export const previousSolutionFound = createAction(
 const initialUiState = {
   output: null,
   isChallengeModalOpen: false,
-  isModalOpen: false,
-  modalType: null,
+  isBugOpen: false,
+  isHelpOpen: false,
   successMessage: 'Happy Coding!'
 };
 
@@ -212,8 +220,8 @@ export const chatRoomSelector = state => getNS(state).helpChatRoom;
 export const challengeModalSelector =
   state => getNS(state).isChallengeModalOpen;
 
-export const isModalOpenSelector = state => getNS(state).isModalOpen;
-export const modalTypeSelector = state => getNS(state).modalType;
+export const bugModalSelector = state => getNS(state).isBugOpen;
+export const helpModalSelector = state => getNS(state).isHelpOpen;
 
 export const challengeRequiredSelector = state =>
   challengeSelector(state).required || [];
@@ -326,20 +334,10 @@ export default combineReducers(
         ...state,
         output: (state.output || '') + output
       }),
-      [types.openBugModal]: state => ({
-        ...state,
-        isModalOpen: true,
-        modalType: 'bug'
-      }),
-      [types.openHelpModal]: state => ({
-        ...state,
-        isModalOpen: true,
-        modalType: 'help'
-      }),
-      [types.closeModal]: state => ({ ...state, isModalOpen: false }),
-      [types.createIssue]: state => ({ ...state, isModalOpen: false }),
-      [types.createQuestion]: state => ({ ...state, isModalOpen: false }),
-      [types.openHelpChatRoom]: state => ({ ...state, isModalOpen: false })
+      [types.openBugModal]: state => ({ ...state, isBugOpen: true }),
+      [types.openHelpModal]: state => ({ ...state, isHelpOpen: true }),
+      [types.closeBugModal]: state => ({ ...state, isBugOpen: false }),
+      [types.closeHelpModal]: state => ({ ...state, isHelpOpen: false })
     }),
     initialState,
     ns

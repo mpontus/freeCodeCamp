@@ -1,41 +1,44 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Button, Modal } from 'react-bootstrap';
-import PureComponent from 'react-pure-render/component';
 
 import ns from './ns.json';
 import {
-  createQuestion, openHelpChatRoom
+  createQuestion,
+  openHelpChatRoom,
+  closeHelpModal,
+  helpModalSelector
 } from './redux';
 
-const mapDispatchToProps = { createQuestion, openHelpChatRoom };
+const mapStateToProps = state => ({ isOpen: helpModalSelector(state) });
+const mapDispatchToProps = { createQuestion, openHelpChatRoom, closeHelpModal };
 const methodologyUrl = 'https://forum.freecodecamp.org/t/the-read-search-ask-methodology-for-getting-unstuck/137307'; // eslint-disable-line max-len
 
 const propTypes = {
+  closeHelpModal: PropTypes.func,
   createQuestion: PropTypes.func,
-  onClose: PropTypes.func.isRequired,
-  openHelpChatRoom: PropTypes.func,
-  show: PropTypes.bool.isRequired
+  isOpen: PropTypes.bool,
+  openHelpChatRoom: PropTypes.func
 };
 
 export class HelpModal extends PureComponent {
   render() {
     const {
-      show,
-      onClose,
+      isOpen,
+      closeHelpModal,
       openHelpChatRoom,
       createQuestion
     } = this.props;
     return (
       <Modal
-        show={ show }
+        show={ isOpen }
         >
         <Modal.Header className={ `${ns}-list-header` }>
           Ask for help?
           <span
             className='close closing-x'
-            onClick={ onClose }
+            onClick={ closeHelpModal }
             >
             ×
           </span>
@@ -74,7 +77,7 @@ export class HelpModal extends PureComponent {
             block={ true }
             bsSize='lg'
             bsStyle='primary'
-            onClick={ onClose }
+            onClick={ closeHelpModal }
             >
             Cancel
           </Button>
@@ -87,4 +90,4 @@ export class HelpModal extends PureComponent {
 HelpModal.displayName = 'HelpModal';
 HelpModal.propTypes = propTypes;
 
-export default connect(null, mapDispatchToProps)(HelpModal);
+export default connect(mapStateToProps, mapDispatchToProps)(HelpModal);

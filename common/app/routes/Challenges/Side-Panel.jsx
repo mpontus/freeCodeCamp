@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 
 import ns from './ns.json';
 
-import Modals from './Modals.jsx';
+import BugModal from './Bug-Modal.jsx';
+import HelpModal from './Help-Modal.jsx';
 import ToolPanel from './Tool-Panel.jsx';
 import ChallengeTitle from './Challenge-Title.jsx';
 import ChallengeDescription from './Challenge-Description.jsx';
@@ -153,7 +154,8 @@ export class SidePanel extends PureComponent {
           unlockUntrustedCode={ unlockUntrustedCode }
           updateHint={ updateHint }
         />
-        <Modals />
+        <BugModal />
+        <HelpModal />
         <Output
           defaultOutput={
 `/**
