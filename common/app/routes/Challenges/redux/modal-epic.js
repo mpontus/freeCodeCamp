@@ -1,6 +1,10 @@
-import { Observable } from 'rx';
 import { combineEpics, ofType } from 'redux-epic';
-import { types, chatRoomSelector } from '../redux';
+import {
+  types,
+  chatRoomSelector,
+  closeBugModal,
+  closeHelpModal
+} from '../redux';
 
 import { filesSelector } from '../../../files';
 import { currentChallengeSelector } from '../../../redux';
@@ -36,7 +40,7 @@ export function openIssueSearchEpic(actions, { getState }, { window }) {
       window.encodeURIComponent(challengeName)
     );
 
-    return Observable.empty();
+    return closeBugModal();
   });
 }
 
@@ -83,7 +87,7 @@ export function createIssueEpic(actions, { getState }, { window }) {
       '_blank'
     );
 
-    return Observable.empty();
+    return closeBugModal();
   });
 }
 
@@ -97,7 +101,7 @@ export function openHelpChatRoomEpic(actions, { getState }, { window }) {
       window.encodeURIComponent(helpChatRoom)
     );
 
-    return Observable.empty();
+    return closeHelpModal();
   });
 }
 
@@ -129,6 +133,8 @@ export function createQuestionEpic(actions, { getState }, { window }) {
       + '&body=' + window.encodeURIComponent(textMessage),
       '_blank'
     );
+
+    return closeHelpModal();
   });
 }
 

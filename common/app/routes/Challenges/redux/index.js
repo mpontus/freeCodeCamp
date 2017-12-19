@@ -333,11 +333,8 @@ export default combineReducers(
         output: (state.output || '') + output
       }),
       [types.openBugModal]: state => ({ ...state, isBugOpen: true }),
-      [types.createIssue]: state => ({ ...state, isBugOpen: false }),
       [types.closeBugModal]: state => ({ ...state, isBugOpen: false }),
       [types.openHelpModal]: state => ({ ...state, isHelpOpen: true }),
-      [types.createQuestion]: state => ({ ...state, isHelpOpen: false }),
-      [types.openHelpChatRoom]: state => ({ ...state, isHelpOpen: false }),
       [types.closeHelpModal]: state => ({ ...state, isHelpOpen: false })
     }),
     initialState,
