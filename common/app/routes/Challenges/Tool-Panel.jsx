@@ -2,6 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Button, ButtonGroup, Tooltip, OverlayTrigger } from 'react-bootstrap';
 
+import ns from './ns.json';
+
 const unlockWarning = (
   <Tooltip id='tooltip'>
     <h4>
@@ -111,13 +113,12 @@ export default class ToolPanel extends PureComponent {
         }
         <div className='button-spacer' />
         <ButtonGroup
-          className='input-group'
+          className={`input-group ${ns}-tool-panel-btn-grp`}
           justified={ true }
           >
           <Button
             bsSize='large'
             bsStyle='primary'
-            componentClass='label'
             onClick={ this.makeReset }
             >
             Reset
@@ -125,7 +126,6 @@ export default class ToolPanel extends PureComponent {
           <Button
             bsSize='large'
             bsStyle='primary'
-            componentClass='label'
             onClick={ openHelpModal }
             >
             Help
@@ -133,7 +133,6 @@ export default class ToolPanel extends PureComponent {
           <Button
             bsSize='large'
             bsStyle='primary'
-            componentClass='label'
             onClick={ openBugModal }
             >
             Bug
