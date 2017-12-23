@@ -53,6 +53,7 @@ export class HelpModal extends PureComponent {
             bsSize='lg'
             bsStyle='primary'
             href={ methodologyUrl }
+            onClick={ closeHelpModal }
             target='_blank'
             >
             Learn about the Read-Search-Ask Methodology
