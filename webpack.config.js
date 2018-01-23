@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var ManifestPlugin = require('webpack-manifest-plugin');
 var ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+const Visualizer = require('webpack-visualizer-plugin');
 
 var __DEV__ = process.env.NODE_ENV !== 'production';
 
@@ -18,30 +19,31 @@ module.exports = {
     net: 'empty'
   },
   output: {
-    filename: __DEV__ ? 'bundle.js' : 'bundle-[hash].js',
+    filename: __DEV__ ? '[name].js' : '[name]-[hash].js',
     chunkFilename: __DEV__ ?
-      'bundle-[name].js' :
-      'bundle-[name]-[chunkhash].js',
+      '[name].js' :
+      '[name]-[chunkhash].js',
     path: path.join(__dirname, '/public/js'),
     publicPath: '/js'
   },
+  resolve: {
+    alias: {
+      'dist/rx.all.js': 'rx/dist/rx.all.js'
+    }
+  },
   module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        include: [
-          path.join(__dirname, 'client/'),
-          path.join(__dirname, 'common/')
-        ],
-        loaders: __DEV__ ? ['react-hot', 'babel'] : [ 'babel' ]
-      },
-      {
-        test: /\.json$/,
-        loaders: [
-          'json-loader'
-        ]
-      }
-    ]
+    rules: [{
+      test: /\.jsx?$/,
+      include: [
+        path.join(__dirname, 'client/'),
+        path.join(__dirname, 'common/'),
+        path.join(__dirname, 'server/')
+      ],
+      use: [
+        __DEV__ && 'react-hot-loader',
+        'babel-loader'
+      ].filter(Boolean)
+    }]
   },
   externals: {
     codemirror: 'CodeMirror',
@@ -58,9 +60,7 @@ module.exports = {
     new webpack.NormalModuleReplacementPlugin(
       /debug\/node/,
       'debug/src/browser'
-    ),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(true)
+    )
   ]
 };
 
@@ -75,6 +75,8 @@ if (!__DEV__) {
 } else {
   module.exports.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    // this will output a .html file in output.path
+    new Visualizer({ filename: 'webpack-bundle-stats.html' })
   );
 }

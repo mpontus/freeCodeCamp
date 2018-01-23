@@ -45,6 +45,7 @@
     "./middlewares/validator": {}
   },
   "routes:before": {
+    "./middlewares/express-extensions": {},
     "express-flash": {},
     "helmet#xssFilter": {},
     "helmet#noSniff": {},
@@ -52,11 +53,11 @@
     "./middlewares/csurf": {},
     "./middlewares/constant-headers": {},
     "./middlewares/csp": {},
-    "./middlewares/express-rx": {},
     "./middlewares/jade-helpers": {},
     "./middlewares/migrate-completed-challenges": {},
     "./middlewares/add-lang": {},
-    "./middlewares/flash-cheaters": {}
+    "./middlewares/flash-cheaters": {},
+    "./middlewares/passport-login": {}
   },
   "files": {},
   "final:after": {
@@ -64,9 +65,9 @@
     "./middlewares/error-handlers": {},
     "strong-error-handler": {
       "params": {
-         "debug": false,
-         "log": true
-       }
+        "debug": false,
+        "log": true
+      }
     }
   }
 }

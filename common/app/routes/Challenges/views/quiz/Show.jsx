@@ -3,23 +3,23 @@ import { addNS } from 'berkeleys-redux-utils';
 
 import ns from './ns.json';
 import Main from './Quiz.jsx';
+import ChildContainer from '../../Child-Container.jsx';
 import { types } from '../../redux';
 import Panes from '../../../../Panes';
 import _Map from '../../../../Map';
-import ChildContainer from '../../../../Child-Container.jsx';
 
 const propTypes = {};
 export const mapStateToPanes = addNS(
   ns,
   () => ({
     [types.toggleMap]: 'Map',
-    [types.toggleMain]: 'Main'
+    [types.toggleMain]: 'Lesson'
   })
 );
 
 const nameToComponent = {
   Map: _Map,
-  Main: Main
+  Lesson: Main
 };
 
 const renderPane = name => {

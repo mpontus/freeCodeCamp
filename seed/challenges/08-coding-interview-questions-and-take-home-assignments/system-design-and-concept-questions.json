@@ -30,7 +30,7 @@
             "<pre><code class='language-javascript'>'ABC'</code></pre>"
           ],
           "answer": 0,
-          "explanation": "The map function will return a new array with each element equal to the old element ran through a callback function.  Our callback function takes our original element, changes it to a upper case, and then wraps it in an array; thus, leaving us with <code>[['A', 'B', 'C']]</code>"
+          "explanation": "The map function will return a new array with each element equal to the old element ran through a callback function.  Our callback function takes our original element, changes it to a upper case, and then wraps it in an array; thus, leaving us with <code>[['A'], ['B'], ['C']]</code>"
         },
         {
           "subtitle": "Maps on Maps",
@@ -70,7 +70,7 @@
         },
         {
           "subtitle": "More Map Hacking",
-          "question": "What will the following code print out?\n<pre><code class='language-javascript'>const results = [8, 5, 3]\n  .map((a, i, o) => o[o.length - i - i])\nconsole.log(results);</code></pre>",
+          "question": "What will the following code print out?\n<pre><code class='language-javascript'>const results = [8, 5, 3]\n  .map((a, i, o) => o[o.length - i - 1])\nconsole.log(results);</code></pre>",
           "choices": [
             "<pre><code class='language-javascript'>[3, 5, 8]</code></pre>",
             "<pre><code class='language-javascript'>[5, 3, 8]</code></pre>",

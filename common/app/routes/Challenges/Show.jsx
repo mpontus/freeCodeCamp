@@ -5,7 +5,6 @@ import { createSelector } from 'reselect';
 
 import { challengeMetaSelector } from './redux';
 
-import CompletionModal from './Completion-Modal.jsx';
 import Classic from './views/classic';
 import Step from './views/step';
 import Project from './views/project';
@@ -15,8 +14,8 @@ import Modern from './views/Modern';
 
 import {
   fetchChallenge,
-
-  challengeSelector
+  challengeSelector,
+  updateTitle
 } from '../../redux';
 import { makeToast } from '../../Toasts/redux';
 import { paramsSelector } from '../../Router/redux';
@@ -33,7 +32,8 @@ const views = {
 
 const mapDispatchToProps = {
   fetchChallenge,
-  makeToast
+  makeToast,
+  updateTitle
 };
 
 const mapStateToProps = createSelector(
@@ -42,12 +42,13 @@ const mapStateToProps = createSelector(
   paramsSelector,
   (
     { dashedName, isTranslated },
-    { viewType },
-    params,
+    { viewType, title },
+    params
   ) => ({
     challenge: dashedName,
     isTranslated,
     params,
+    title,
     viewType
   })
 );
@@ -64,6 +65,8 @@ const propTypes = {
     dashedName: PropTypes.string,
     lang: PropTypes.string.isRequired
   }),
+  title: PropTypes.string,
+  updateTitle: PropTypes.func.isRequired,
   viewType: PropTypes.string
 };
 
@@ -82,12 +85,16 @@ export class Show extends PureComponent {
   }
 
   componentDidMount() {
+    this.props.updateTitle(this.props.title);
     if (this.isNotTranslated(this.props)) {
       this.makeTranslateToast();
     }
   }
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.title !== nextProps.title) {
+      this.props.updateTitle(nextProps.title);
+    }
     const { params: { dashedName } } = nextProps;
     if (
       this.props.params.dashedName !== dashedName &&
@@ -100,12 +107,7 @@ export class Show extends PureComponent {
   render() {
     const { viewType } = this.props;
     const View = views[viewType] || Classic;
-    return (
-      <div>
-        <View />
-        <CompletionModal />
-      </div>
-    );
+    return <View />;
   }
 }
 

@@ -7,12 +7,12 @@ import { addNS } from 'berkeleys-redux-utils';
 
 import ns from './ns.json';
 import Editor from './Editor.jsx';
+import ChildContainer from '../../Child-Container.jsx';
 import { showPreviewSelector, types } from '../../redux';
 import SidePanel from '../../Side-Panel.jsx';
 import Preview from '../../Preview.jsx';
 import _Map from '../../../../Map';
 import Panes from '../../../../Panes';
-import ChildContainer from '../../../../Child-Container.jsx';
 import { filesSelector } from '../../../../files';
 
 const createModernEditorToggleType = fileKey =>
@@ -50,7 +50,7 @@ export const mapStateToPanes = addNS(
         return map;
       }, {
         [types.toggleMap]: 'Map',
-        [types.toggleSidePanel]: 'Side Panel'
+        [types.toggleSidePanel]: 'Lesson'
       });
 
       if (showPreview) {
@@ -63,7 +63,7 @@ export const mapStateToPanes = addNS(
 
 const nameToComponent = {
   Map: _Map,
-  'Side Panel': SidePanel,
+  Lesson: SidePanel,
   Preview: Preview
 };
 

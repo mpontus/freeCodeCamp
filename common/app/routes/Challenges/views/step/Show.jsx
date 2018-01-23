@@ -3,23 +3,23 @@ import { addNS } from 'berkeleys-redux-utils';
 
 import ns from './ns.json';
 import Step from './Step.jsx';
+import ChildContainer from '../../Child-Container.jsx';
 import { types } from '../../redux';
 import Panes from '../../../../Panes';
 import _Map from '../../../../Map';
-import ChildContainer from '../../../../Child-Container.jsx';
 
 const propTypes = {};
 export const mapStateToPanes = addNS(
   ns,
   () => ({
     [types.toggleMap]: 'Map',
-    [types.toggleStep]: 'Step'
+    [types.toggleStep]: 'Lesson'
   })
 );
 
 const nameToComponent = {
   Map: _Map,
-  Step: Step
+  Lesson: Step
 };
 
 const renderPane = name => {
